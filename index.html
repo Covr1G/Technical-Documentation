@@ -1,57 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles.css">
     <title>Assembler Documentation</title>
 </head>
+
 <body>
     <nav id="navbar">
         <header>Assembler Documentation</header>
         <ul>
-          <li><a class="nav-link" href="#Assembler_Overview">Assembler Overview</a></li>  
-          <li><a class="nav-link" href="#Processing_And_Storage">Processing And Storage</a></li>  
-          <li><a class="nav-link" href="#Syntax_And_Semantincs">Syntax And Semantincs</a></li>  
-          <li><a class="nav-link" href="#Addressing">Addressing</a></li>  
-          <li><a class="nav-link" href="#Instruction_Set">Instruction Set</a></li>  
+            <li><a class="nav-link" href="#Assembler_Overview">Assembler Overview</a></li>
+            <li><a class="nav-link" href="#Processing_And_Storage">Processing And Storage</a></li>
+            <li><a class="nav-link" href="#Syntax_And_Semantincs">Syntax And Semantincs</a></li>
+            <li><a class="nav-link" href="#Addressing">Addressing</a></li>
+            <li><a class="nav-link" href="#Instruction_Set">Instruction Set</a></li>
 
         </ul>
     </nav>
-        <main id="main-doc">
-            <section class="main-section" id="Assembler_Overview">
-                <header>Assembler Overview</header>
-                <p>Features of the AIX Assembler:</p>
-                <ol>
-                    <li>Multiple hardware architecture and implementation platform support</li>
-                    <li>Host machine independence and target environment indicator flag</li>
-                    <li>Mnemonics cross-reference</li>
-                    <li>CPU ID definition</li>
-                    <li>Source language type</li>
-                </ol>
-            </section>
-            <section class="main-section" id="Processing_And_Storage">
-                <header>Processing And Storage</header>
-                <p>The processor stores the data in the main memory and in the registers.</p>
-                <p>The assembler supports the various processors that implement the POWER® family and PowerPC® architectures.   
-                </p>
-                    <pre>
+    <main id="main-doc">
+        <section class="main-section" id="Assembler_Overview">
+            <header>Assembler Overview</header>
+            <p>Features of the AIX Assembler:</p>
+            <ol>
+                <li>Multiple hardware architecture and implementation platform support</li>
+                <li>Host machine independence and target environment indicator flag</li>
+                <li>Mnemonics cross-reference</li>
+                <li>CPU ID definition</li>
+                <li>Source language type</li>
+            </ol>
+        </section>
+        <section class="main-section" id="Processing_And_Storage">
+            <header>Processing And Storage</header>
+            <p>The processor stores the data in the main memory and in the registers.</p>
+            <p>The assembler supports the various processors that implement the POWER® family and PowerPC®
+                architectures.
+            </p>
+            <pre>
                         <code>TLSBSS = 256</code>
                     </pre>
-                    <p>(For DATA and GLOBL items.) Put this data in thread local storage</p>
-            </section>
-            <section class="main-section" id="Syntax_And_Semantincs">
-                <header>Syntax And Semantincs</header>
-                <p></p>
-            </section>
-            <section class="main-section" id="Addressing">
-                <header>Addressing</header>
-                <p></p>
-            </section>
-            <section class="main-section" id="Instruction_Set">
-                <header>Instruction Set</header>
-                <p></p>
-            </section>
-        </main>
+            <p>(For DATA and GLOBL items.) Put this data in thread local storage</p>
+        </section>
+        <section class="main-section" id="Syntax_And_Semantincs">
+            <header>Syntax And Semantincs</header>
+            <p>The syntax and semantics of assembler language are defined.</p>
+            <p>Some of them are Character Set, Reserved Words, Line format etc.</p>
+            <pre><code>
+                    $ (dollar sign)
+                    dino:   .long 1,2,3
+                    size:   .long $ - dino
+                </code></pre>
+            <p>In this example is demonstrated the $ sign syntax.</p>
+        </section>
+        <section class="main-section" id="Addressing">
+            <header>Addressing</header>
+            <p>When using the compiler and assembler's -dynlink or -shared modes, any load or store of a fixed memory
+                location such as a global variable must be assumed to overwrite CX.
+
+            </p>
+            <p>Therefore, to be safe for use with these modes, assembly sources should typically avoid CX except between
+                memory references.
+
+            </p>
+            <pre>
+                    <code>
+                        get_tls(CX)
+                        MOVQ	g(CX), AX     // Move g into AX.
+                        MOVQ	g_m(AX), BX   // Move g.m into BX.
+                    </code>
+                </pre>
+            <p>The two architectures behave largely the same at the assembler level. Assembly code to access the m and g
+                pointers on the 64-bit version is the same as on the 32-bit 386, except it uses MOVQ rather than MOVL:
+            </p>
+            <img src="https://www.tutorialspoint.com/embedded_systems/images/immidiate_addressing_mode.jpg"
+                alt="addressing-mode-img" class="image" />
+            <pre>
+                    <code>
+                        R0->16
+                        R0>>16
+                        R0<<16
+                        R0@>16: For <<, left shift R0 by 16 bits.
+                </code>
+            </pre>
+        </section>
+        <section class="main-section" id="Instruction_Set">
+            <header>Instruction Set</header>
+            <p>Takes the absolute value of the contents of a general-purpose register and places the result in another
+                general-purpose register.
+
+            </p>
+            <p>“Note: The abs instruction is supported only in the POWER® family architecture.”</p>
+            <p>This is the absolute value</p>
+            <pre>
+                    <code>
+                        # Assume GPR 4 contains 0x7000 3000.
+                        abs 6,4
+                        # GPR 6 now contains 0x7000 3000.
+                    </code>
+                  <p>GPR 4</p>      
+                  <pre>
+                    <code>
+                        # Assume GPR 4 contains 0x1000 0400.
+                        # Assume GPR 10 contains 0x1000 0400.
+                        # Assume the Carry bit is one.
+                        adde 6,4,10
+                        # GPR 6 now contains 0x2000 0801.
+                    </code>
+                  </pre>
+            </pre>
+        </section>
+    </main>
 </body>
+
 </html>
