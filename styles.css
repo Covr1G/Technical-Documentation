@@ -36,9 +36,11 @@ section {
     text-decoration: none;
     cursor: pointer;
     font-size: 19px;
+    transition: text-indent 0.3s ease-in-out;
 }
 
 #navbar a:hover{
     font-weight: 500;
     text-indent: 5px;
+    
 }
