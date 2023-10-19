@@ -67,7 +67,7 @@ header {
 code {
     display: block;
     text-align: left;
-    white-space: normal;
+    white-space: pre;
     word-break: normal;
     word-wrap: normal;
     line-height: 1.5;
@@ -79,4 +79,12 @@ code {
 
 .image {
     width: 100%;
+
 }
+
+footer {
+    padding: 30px;
+    text-align: center;
+    color: #888;
+}
+
