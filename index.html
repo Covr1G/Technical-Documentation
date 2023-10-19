@@ -48,7 +48,7 @@
             <p>The syntax and semantics of assembler language are defined.</p>
             <p>Some of them are Character Set, Reserved Words, Line format etc.</p>
             <pre><code>
-                    $ (dollar sign)
+                    $ (dollar sign) <br>
                     dino:   .long 1,2,3
                     size:   .long $ - dino
                 </code></pre>
@@ -66,7 +66,7 @@
             </p>
             <pre>
                     <code>
-                        get_tls(CX)
+                        get_tls(CX) 
                         MOVQ	g(CX), AX     // Move g into AX.
                         MOVQ	g_m(AX), BX   // Move g.m into BX.
                     </code>
@@ -78,8 +78,8 @@
                 alt="addressing-mode-img" class="image" />
             <pre>
                     <code>
-                        R0->16
-                        R0>>16
+                        R0->16 
+                        R0>>16 
                         R0<<16
                         R0@>16: For <<, left shift R0 by 16 bits.
                 </code>
@@ -96,7 +96,7 @@
             <pre>
                     <code>
                         # Assume GPR 4 contains 0x7000 3000.
-                        abs 6,4
+                        abs 6,4 <br>
                         # GPR 6 now contains 0x7000 3000.
                     </code>
                 </pre>
@@ -112,6 +112,9 @@
                   </pre>
         
         </section>
+        <footer>
+            <p>Documentation provided by IBM</p>
+        </footer>
     </main>
 </body>
 
